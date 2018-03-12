@@ -3,30 +3,46 @@
   (:require [quil.core :as q]
             [quil.middleware :as m]))
 
+(defn scale
+  [x]
+  (* x 10000))
+
+; (def colors
+;   [[207 240 158]
+;    [162 219 168]
+;    [121 189 154]
+;    [59 134 134]
+;    [11 72 107]])
+
 (def colors
-  [[207 240 158]
-   [162 219 168]
-   [121 189 154]
-   [59 134 134]
-   [11 72 107]])
+  [[236 208 120]
+   [217 91 67]
+   [192 41 66]
+   [84 36 55]
+   [83 119 122]])
 
 (def sizes-and-counts
-  [{:size 2000 :count 10}
-   {:size 1000 :count 20}
-   {:size 500 :count 100}
-   {:size 100 :count 1000}])
+  [{:size 0.1 :count 4}
+   {:size 0.07 :count 100}
+   {:size 0.03 :count 1000}
+   {:size 0.01 :count 50000}
+   {:size 0.005 :count 500000}])
 
 (defn circles-collide?
   [circle1 circle2]
   (let [[x1 y1 d1 _] circle1
         [x2 y2 d2 _] circle2]
-    (> (+ (/ d1 2) (/ d2 2))
+    (> (+ (/ d1 2) (/ d2 2) 0.005)
        (Math/sqrt (+ (Math/pow (- x1 x2) 2)
                      (Math/pow (- y1 y2) 2))))))
 
 (defn random-circle
   [size]
-  [(rand-int 10000) (rand-int 10000) size (rand-nth colors)])
+  (let [r (/ size 2)
+        margin 0.01
+        x (+ r margin (rand (- 1 (* r 2) (* margin 2))))
+        y (+ r margin (rand (- 1 (* r 2) (* margin 2))))]
+    [x y size (rand-nth colors)]))
 
 (defn add-circle
   [circle-list circle]
@@ -48,18 +64,17 @@
          circles []]
     (if (empty? sizes-and-counts)
       circles
-      (recur (rest sizes-and-counts) 
-        (add-circles (random-circle-list (:count (first sizes-and-counts)) (:size (first sizes-and-counts))) circles)))))
+      (recur (rest sizes-and-counts)
+             (add-circles (random-circle-list (:count (first sizes-and-counts)) (:size (first sizes-and-counts))) circles)))))
 
 (defn draw-circle
   [[x y d [r g b]]]
   (q/fill r g b)
-  (q/ellipse x y d d))
+  (q/ellipse (scale x) (scale y) (scale d) (scale d)))
 
 (defn setup []
   (q/frame-rate 30)
-  (q/color-mode :hsb)
-  (q/background 240)
+  (q/background 255 255 240)
   (q/color-mode :rgb)
   (q/no-stroke)
   (compute-circles sizes-and-counts))
@@ -67,7 +82,7 @@
 (defn draw-state [state]
   (let [circles state]
     (doall (map draw-circle circles)))
-    (q/save "test.png"))
+  (q/save "test.png"))
 
 (defn -main
   []
