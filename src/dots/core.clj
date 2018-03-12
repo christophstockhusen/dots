@@ -7,13 +7,6 @@
   [x]
   (* x 10000))
 
-; (def colors
-;   [[207 240 158]
-;    [162 219 168]
-;    [121 189 154]
-;    [59 134 134]
-;    [11 72 107]])
-
 (def colors
   [[236 208 120]
    [217 91 67]
@@ -22,8 +15,9 @@
    [83 119 122]])
 
 (def sizes-and-counts
-  [{:size 0.1 :count 4}
-   {:size 0.07 :count 100}
+  [{:size 0.2 :count 2}
+   {:size 0.1 :count 10}
+   {:size 0.05 :count 100}
    {:size 0.03 :count 1000}
    {:size 0.01 :count 50000}
    {:size 0.005 :count 500000}])
@@ -36,13 +30,21 @@
        (Math/sqrt (+ (Math/pow (- x1 x2) 2)
                      (Math/pow (- y1 y2) 2))))))
 
+(defn gaussian
+  [shift factor]
+  (max (min (+ shift (* factor (q/random-gaussian))) 1) 0))
+
 (defn random-circle
   [size]
   (let [r (/ size 2)
         margin 0.01
         x (+ r margin (rand (- 1 (* r 2) (* margin 2))))
-        y (+ r margin (rand (- 1 (* r 2) (* margin 2))))]
-    [x y size (rand-nth colors)]))
+        y (+ r margin (rand (- 1 (* r 2) (* margin 2))))
+        c1 (nth colors (int (* (gaussian y 0.25) (dec (count colors)))))
+        c2 (rand-nth colors)]
+    (if (> 0.03 size)
+      [x y size c1]
+      [x y size c2])))
 
 (defn add-circle
   [circle-list circle]
