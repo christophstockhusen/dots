@@ -7,12 +7,29 @@
   [x]
   (* x 10000))
 
+;; 
 (def colors
   [[236 208 120]
    [217 91 67]
    [192 41 66]
    [84 36 55]
    [83 119 122]])
+
+;; http://www.color-hex.com/color-palette/660
+(def colors
+  [[255 203 133]
+   [253 245 201]
+   [194 242 208]
+   [255 197 217]
+   [107 62 38]])
+
+;; http://www.color-hex.com/color-palette/1294
+(def colors
+  [[1 31 75]
+   [3 57 108]
+   [0 91 150]
+   [100 151 177]
+   [179 205 224]])
 
 (def sizes-and-counts
   [{:size 0.2 :count 2}
