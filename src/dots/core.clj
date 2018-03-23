@@ -101,7 +101,7 @@
 (defn draw-state [state]
   (let [circles state]
     (doall (map draw-circle circles)))
-  (q/save "test.png"))
+  (q/save "result.png"))
 
 (defn -main
   []
