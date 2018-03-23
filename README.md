@@ -1,18 +1,16 @@
-# hello-quil
+# Dots
 
-A Quil sketch designed to ... well, that part is up to you.
+A simple quil sketch with many dots. Thanks to the awesome [Tyler Hobbs](http://www.tylerlhobbs.com/) for the inspiration!
 
 ## Usage
 
-LightTable - open `core.clj` and press `Ctrl+Shift+Enter` to evaluate the file.
-
-Emacs - run cider, open `core.clj` and press `C-c C-k` to evaluate the file.
-
-REPL - run `(require 'hello-quil.core)`.
+1. Install Leiningen from https://leiningen.org/
+2. Run `lein run`
 
 ## License
 
-Copyright © 2016 FIXME
+THE BEER-WARE LICENSE
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Christoph Stockhusen wrote these files. As long as you retain this notice you
+can do whatever you want with this stuff. If we meet some day, and you think
+this stuff is worth it, you can buy me a beer in return.
